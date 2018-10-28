@@ -108,11 +108,10 @@ else:
         endforeach;
 
         if ($records->peer_id == "default") :
-            // エラー表示
-            echo "<script>alert('評価相手を選択してください。');</script>";
-
             // もう一度formを読み込む
             require_once("{$CFG->dirroot}/mod/ispeereval/peereval_form.php");
+            // エラー表示
+            echo "<script>window.onload = function() { alert('評価相手を選択してください。'); };</script>";
         else:
             // rubricsのDB登録
             if (ispeereval_rubrics_upsert($records)):
