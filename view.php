@@ -95,6 +95,7 @@ if (count($teacher) > 0) :
 
 else:
     // not teacher
+    var_dump($context->id);
 
     if (isset($_POST['rubrics_submit'])) :
         // rubricの登録ボタンが押された時

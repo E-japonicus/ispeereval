@@ -2,11 +2,11 @@
 // $user_sql = 'SELECT {user}.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username FROM (SELECT * FROM {user_enrolments} WHERE enrolid = (SELECT id FROM {enrol} WHERE enrol = "manual" AND courseid = ?)) B INNER JOIN {user} ON B.userid = {user}.id';
 $user_sql = 
 'SELECT DISTINCT {user}.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username FROM 
-(SELECT ROLE.userid FROM (SELECT userid FROM {role_assignments} WHERE roleid = 
+(SELECT ROLE.userid FROM (SELECT userid FROM {role_assignments} WHERE contextid = ? AND roleid = 
 (SELECT id FROM {role} WHERE shortname = "student")) ROLE INNER JOIN 
 (SELECT userid FROM {user_enrolments} WHERE enrolid = 
 (SELECT id FROM {enrol} WHERE enrol = "manual" AND courseid = ?)) ENROL ON ROLE.userid = ENROL.userid) USER INNER JOIN {user} ON USER.userid = {user}.id;';
-$user_records = $DB->get_records_sql($user_sql, array($course->id));
+$user_records = $DB->get_records_sql($user_sql, array($context->id, $course->id));
 ?>
 
 <link rel="stylesheet" type="text/css" href="./style.css">
