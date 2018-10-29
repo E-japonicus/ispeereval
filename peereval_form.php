@@ -67,7 +67,7 @@ $user_records = $DB->get_records_sql($user_sql, array($course->id));
             </tr>
         </tbody>
     </table>
-    <button class="submit-button" name="rubrics_submit">自己評価結果を登録する</button>
+    <button class="submit-button" name="rubrics_submit">他者評価結果を登録する</button>
 </form>
 </div>
 
