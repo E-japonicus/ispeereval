@@ -1,21 +1,11 @@
-<?php
-// 自分が登録した評価
-// $you_entry_records = $DB->get_records('ispeereval_rubrics', $composite_key);
-$you_entry_records_sql = 'SELECT A.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username
-                            from (SELECT * from {ispeereval_rubrics} WHERE ispeereval_id = ? AND user_id = ?) A
-                            inner join {user} on A.peer_id = {user}.id';
-$you_entry_records = $DB->get_records_sql($you_entry_records_sql, array($ispeereval->id, $USER->id));                         
-?>
-
 <link rel="stylesheet" type="text/css" href="./style.css">
 
-<h1>登録した評価の確認</h1>
+<h1 id="entry_records">登録した評価</h1>
 <ul class="nav nav-tabs">
 <?php foreach ($you_entry_records as $record) :?>
 <li><a data-toggle="tab" href="#<?php echo $record->username ?>"><?php echo $record->name; ?></a></li>
 <?php endforeach; ?>
 </ul>
-
 
 <div class="tab-content">
 <?php foreach ($you_entry_records as $record) :?>
@@ -65,5 +55,3 @@ $you_entry_records = $DB->get_records_sql($you_entry_records_sql, array($ispeere
 </div>
 <?php endforeach; ?>
 </div>
-
-

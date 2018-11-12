@@ -95,7 +95,6 @@ if (count($teacher) > 0) :
 
 else:
     // not teacher
-    var_dump($context->id);
 
     if (isset($_POST['rubrics_submit'])) :
         // rubricの登録ボタンが押された時
@@ -123,7 +122,6 @@ else:
         endif;
     endif;
 
-
     // formの表示
     require_once("{$CFG->dirroot}/mod/ispeereval/peereval_form.php");
 
@@ -131,6 +129,8 @@ else:
     if ($DB->get_record('ispeereval_rubrics', $composite_key)) :
         require_once("{$CFG->dirroot}/mod/ispeereval/peereval_entry_result.php");
     endif;
+
+    
 endif;
 
 
