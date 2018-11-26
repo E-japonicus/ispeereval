@@ -109,7 +109,8 @@ else:
 
         if ($records->peer_id == "default") :
             // もう一度formを読み込む
-            require_once("{$CFG->dirroot}/mod/ispeereval/peereval_form.php");
+            header("Location: ".$_SERVER[‘PHP_SELF’]);
+            //require_once("{$CFG->dirroot}/mod/ispeereval/peereval_form.php");
             // エラー表示
             echo "<script>window.onload = function() { alert('評価相手を選択してください。'); };</script>";
         else:

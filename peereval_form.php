@@ -5,8 +5,16 @@ $group_menbers_sql =
 'SELECT PR.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username FROM
 (SELECT userid, PE.user_id as entry_user_id, rubric_1, rubric_2, rubric_3, comment  FROM (SELECT * FROM {groups_members} WHERE groupid = ?) UG LEFT OUTER JOIN 
 (SELECT * FROM {ispeereval_rubrics} WHERE user_id = ? AND ispeereval_id = ?) PE ON UG.userid = PE.peer_id) PR
-INNER JOIN {user} ON {user}.id = PR.userid;';
-$group_menbers_records= $DB->get_records_sql($group_menbers_sql, array($groupid, $USER->id, $ispeereval->id));
+INNER JOIN {user} ON {user}.id = PR.userid WHERE NOT EXISTS (SELECT * FROM {user} WHERE PR.userid = ?)';
+$group_menbers_records= $DB->get_records_sql($group_menbers_sql, array($groupid, $USER->id, $ispeereval->id, $USER->id));
+// // グループ情報の取得
+// $groupid = groups_get_user_groups($course->id, $userid)[0][0];
+// $group_menbers_sql =
+// 'SELECT PR.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username FROM
+// (SELECT userid, PE.user_id as entry_user_id, rubric_1, rubric_2, rubric_3, comment  FROM (SELECT * FROM {groups_members} WHERE groupid = ?) UG LEFT OUTER JOIN 
+// (SELECT * FROM {ispeereval_rubrics} WHERE user_id = ? AND ispeereval_id = ?) PE ON UG.userid = PE.peer_id) PR
+// INNER JOIN {user} ON {user}.id = PR.userid';
+// $group_menbers_records= $DB->get_records_sql($group_menbers_sql, array($groupid, $USER->id, $ispeereval->id));
 
 // グループがない場合コース内のユーザー情報を取得
 if (!isset($groupid)) {
@@ -15,7 +23,7 @@ if (!isset($groupid)) {
     (SELECT ROLE.userid FROM (SELECT userid FROM {role_assignments} WHERE contextid = ? AND roleid = 
     (SELECT id FROM {role} WHERE shortname = "student")) ROLE INNER JOIN 
     (SELECT userid FROM {user_enrolments} WHERE enrolid = 
-    (SELECT id FROM {enrol} WHERE enrol = "manual" AND courseid = ?)) ENROL ON ROLE.userid = ENROL.userid) USER INNER JOIN {user} ON USER.userid = {user}.id;';
+    (SELECT id FROM {enrol} WHERE enrol = "manual" AND courseid = ?)) ENROL ON ROLE.userid = ENROL.userid) USER INNER JOIN {user} ON USER.userid = {user}.id';
     $group_menbers_records = $DB->get_records_sql($group_menbers_sql, array($context->id, $course->id));
 }
 

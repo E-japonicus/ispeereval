@@ -38,10 +38,9 @@ defined('MOODLE_INTERNAL') || die();
  */
 
   function ispeereval_rubrics_upsert($input){
-     global $DB, $composite_key;
-     $record = $DB->get_record('ispeereval_rubrics', array('peer_id' => $input->peer_id));
+     global $DB, $composite_key, $USER, $ispeereval;
 
-     if(!is_null($record) AND $input->peer_id === $record->peer_id):   // 既にDBにデータが登録されている時
+     if($record = $DB->get_record('ispeereval_rubrics', array('user_id' => $USER->id, 'ispeereval_id' => $ispeereval->id, 'peer_id' => $input->peer_id))):   // 既にDBにデータが登録されている時
 
         foreach ($input as $key => $value):
             $record->$key = $value;
