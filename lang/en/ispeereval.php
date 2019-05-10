@@ -85,26 +85,26 @@ $string['rubric[3]_ability'] = '表現力：グループセッションにおけ
 $string['rubric[4]']        = '自分で工夫した問題を作成することができる';
 $string['rubric[4]_help']   = '';
 $string['rubric[4]_suffix'] = '';
-$string['rubric[4]_score0'] = '問題(選択肢、解説を含む)を作成していなかった';
-$string['rubric[4]_score1'] = '作成された問題は、既存の問題の一部のみ(数字だけを変える等)を修正した問題だった';
-$string['rubric[4]_score2'] = '作成された問題は、既存の問題に類似した問題(同じ解法で解答できる問題等)だった';
-$string['rubric[4]_score3'] = '作成された問題は、既存の問題を参考にし、大部分を自分自身で考えた問題だった。';
+$string['rubric[4]_score0'] = '問題(選択肢、解説を含む)を<span class="highlight">作成していなかった</span>';
+$string['rubric[4]_score1'] = '作成された問題は、既存の問題の<span class="highlight">一部のみ(数字だけを変える等)を修正した問題だった</span>';
+$string['rubric[4]_score2'] = '作成された問題は、既存の問題に<span class="highlight">類似した問題(同じ解法で解答できる問題等)だった</span>';
+$string['rubric[4]_score3'] = '作成された問題は、既存の問題を参考にし、<span class="highlight">大部分を自分自身で考えた問題だった</span>';
 $string['rubric[4]_ability'] = '思考力[作問を通じた創造的思考力]：出題箇所の問題化、<br />表現力：作問時における文法的表現';
 
 $string['rubric[5]']        = '相互評価用チェックリストに従ってグループメンバーの問題を正しく評価できる';
 $string['rubric[5]_help']   = '';
 $string['rubric[5]_suffix'] = '';
-$string['rubric[5]_score0'] = 'グループメンバーの問題を評価する際に、相互評価用チェックリストを全く評価(確認)していなかった';
-$string['rubric[5]_score1'] = 'グループメンバーの問題を評価する際に、相互評価用チェックリストの一部の項目だけ評価(確認)していた';
-$string['rubric[5]_score2'] = 'グループメンバーの問題を評価する際に、相互評価用チェックリストの各項目を概ね評価(確認)していた';
-$string['rubric[5]_score3'] = 'グループメンバーの問題を評価する際に、相互評価用チェックリストのすべての項目を正しく評価(確認)していた';
+$string['rubric[5]_score0'] = 'グループメンバーの問題を評価する際に、相互評価用チェックリストを<span class="highlight">全く評価(確認)していなかった</span>';
+$string['rubric[5]_score1'] = 'グループメンバーの問題を評価する際に、相互評価用チェックリストの<span class="highlight">一部の項目だけ評価(確認)していた</span>';
+$string['rubric[5]_score2'] = 'グループメンバーの問題を評価する際に、相互評価用チェックリストの<span class="highlight">各項目を概ね評価(確認)していた</span>';
+$string['rubric[5]_score3'] = 'グループメンバーの問題を評価する際に、相互評価用チェックリストの<span class="highlight">すべての項目を正しく評価(確認)していた</span>';
 $string['rubric[5]_ability'] = '判断力：問題の評価・選択';
 
 $string['rubric[6]']        = '作問の要件(出題範囲と正答率)を満たしている問題を選択できる';
 $string['rubric[6]_help']   = '';
 $string['rubric[6]_suffix'] = '';
-$string['rubric[6]_score0'] = 'グループメンバー(自分も含む)が作成した問題の中から、作問の要件(出題範囲と正答率)を満たした問題を全く選択できていなかった';
-$string['rubric[6]_score1'] = 'グループメンバー(自分も含む)が作成した問題の中から、作問の要件(出題範囲と正答率)を満たした問題を一部選択していた';
-$string['rubric[6]_score2'] = 'グループメンバー(自分も含む)が作成した問題の中から、作問の要件(出題範囲と正答率)を満たした問題を概ね選択していた';
-$string['rubric[6]_score3'] = 'グループメンバー(自分も含む)が作成した問題の中から、作問の要件(出題範囲と正答率)を満たした問題をすべて正しく選択していた';
+$string['rubric[6]_score0'] = 'グループメンバー(自分も含む)が作成した問題の中から、作問の要件(出題範囲と正答率)を満たした問題を<span class="highlight">全く選択できていなかった</span>';
+$string['rubric[6]_score1'] = 'グループメンバー(自分も含む)が作成した問題の中から、作問の要件(出題範囲と正答率)を満たした問題を<span class="highlight">一部選択していた</span>';
+$string['rubric[6]_score2'] = 'グループメンバー(自分も含む)が作成した問題の中から、作問の要件(出題範囲と正答率)を満たした問題を<span class="highlight">概ね選択していた</span>';
+$string['rubric[6]_score3'] = 'グループメンバー(自分も含む)が作成した問題の中から、作問の要件(出題範囲と正答率)を満たした問題を<span class="highlight">すべて正しく選択していた</span>';
 $string['rubric[6]_ability'] = '判断力：問題の評価・選択';
