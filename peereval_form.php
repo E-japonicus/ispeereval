@@ -3,7 +3,7 @@
 $groupid = groups_get_user_groups($course->id, $userid)[0][0];
 $group_menbers_sql =
 'SELECT PR.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username FROM
-(SELECT userid, PE.user_id as entry_user_id, rubric_1, rubric_2, rubric_3, comment  FROM (SELECT * FROM {groups_members} WHERE groupid = ?) UG LEFT OUTER JOIN 
+(SELECT userid, PE.user_id as entry_user_id, rubric_1, rubric_2, rubric_3, rubric_4, rubric_5, rubric_6 comment  FROM (SELECT * FROM {groups_members} WHERE groupid = ?) UG LEFT OUTER JOIN 
 (SELECT * FROM {ispeereval_rubrics} WHERE user_id = ? AND ispeereval_id = ?) PE ON UG.userid = PE.peer_id) PR
 INNER JOIN {user} ON {user}.id = PR.userid WHERE NOT EXISTS (SELECT * FROM {user} WHERE PR.userid = ?)';
 $group_menbers_records= $DB->get_records_sql($group_menbers_sql, array($groupid, $USER->id, $ispeereval->id, $USER->id));
@@ -89,7 +89,7 @@ $you_entry_records = $DB->get_records_sql($you_entry_records_sql, array($ispeere
                 <th style="text-align:center" width="15%">レベル２</th>
                 <th style="text-align:center" width="15%">レベル３</th>
             </tr>
-            <?php for ($i=1; $i <= 3 ; $i++): ?>
+            <?php for ($i=1; $i <= 6 ; $i++): ?>
                 <tr height="150">
                     <th width="2%">
                         <?php echo $i ?>

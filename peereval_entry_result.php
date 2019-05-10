@@ -23,7 +23,7 @@
                 <th style="text-align:center" width="15%">レベル２</th>
                 <th style="text-align:center" width="15%">レベル３</th>
             </tr>
-            <?php for ($i=1; $i <= 3; $i++) :?>
+            <?php for ($i=1; $i <= 6; $i++) :?>
             <tr height="150">
                 <th width="2%">
                     <?php echo $i ?>

@@ -18,6 +18,9 @@ $rubric_records = $DB->get_records_sql($sql,  array($ispeereval->id));
           <th>ﾙｰﾌﾞﾘｯｸ[1]</th>
           <th>ﾙｰﾌﾞﾘｯｸ[2]</th>
           <th>ﾙｰﾌﾞﾘｯｸ[3]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[4]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[5]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[6]</th>
           <th>コメント</th>
         </tr>
       </thead>
@@ -28,7 +31,7 @@ $rubric_records = $DB->get_records_sql($sql,  array($ispeereval->id));
             <th><?php echo $record->peer_name  ; ?></th>
 
             <?php
-            for ($i=1; $i <= 3; $i++) {
+            for ($i=1; $i <= 6; $i++) {
               echo "<th>".$record->{"rubric_{$i}"}."</th>";
             }
             ?>

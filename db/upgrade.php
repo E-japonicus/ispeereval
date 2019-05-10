@@ -162,5 +162,52 @@ function xmldb_ispeereval_upgrade($oldversion) {
      *
      * Finally, return of upgrade result (true, all went good) to Moodle.
      */
+    if ($oldversion < 2019051001) {
+
+        // Define field rubric_4 to be added to ispeereval_rubrics.
+        $table = new xmldb_table('ispeereval_rubrics');
+        $field = new xmldb_field('rubric_4', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'rubric_3');
+
+        // Conditionally launch add field rubric_4.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ispeereval savepoint reached.
+        upgrade_mod_savepoint(true, 2019051001, 'ispeereval');
+    }
+
+    if ($oldversion < 2019051002) {
+
+        // Define field rubric_5 to be added to ispeereval_rubrics.
+        $table = new xmldb_table('ispeereval_rubrics');
+        $field = new xmldb_field('rubric_5', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'rubric_4');
+
+        // Conditionally launch add field rubric_5.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ispeereval savepoint reached.
+        upgrade_mod_savepoint(true, 2019051002, 'ispeereval');
+    }
+
+    if ($oldversion < 2019051003) {
+
+        // Define field rubric_6 to be added to ispeereval_rubrics.
+        $table = new xmldb_table('ispeereval_rubrics');
+        $field = new xmldb_field('rubric_6', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'rubric_5');
+
+        // Conditionally launch add field rubric_6.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ispeereval savepoint reached.
+        upgrade_mod_savepoint(true, 2019051003, 'ispeereval');
+    }
+
+
+
     return true;
 }
