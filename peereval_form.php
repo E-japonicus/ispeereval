@@ -1,20 +1,48 @@
 <?php
 // グループ情報の取得
 $groupid = groups_get_user_groups($course->id, $userid)[0][0];
-$group_menbers_sql =
-'SELECT PR.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username FROM
-(SELECT userid, PE.user_id as entry_user_id, rubric_1, rubric_2, rubric_3, rubric_4, rubric_5, rubric_6 comment  FROM (SELECT * FROM {groups_members} WHERE groupid = ?) UG LEFT OUTER JOIN 
-(SELECT * FROM {ispeereval_rubrics} WHERE user_id = ? AND ispeereval_id = ?) PE ON UG.userid = PE.peer_id) PR
-INNER JOIN {user} ON {user}.id = PR.userid WHERE NOT EXISTS (SELECT * FROM {user} WHERE PR.userid = ?)';
-$group_menbers_records= $DB->get_records_sql($group_menbers_sql, array($groupid, $USER->id, $ispeereval->id, $USER->id));
-// // グループ情報の取得
-// $groupid = groups_get_user_groups($course->id, $userid)[0][0];
+// --------------------v1.0
 // $group_menbers_sql =
 // 'SELECT PR.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username FROM
-// (SELECT userid, PE.user_id as entry_user_id, rubric_1, rubric_2, rubric_3, comment  FROM (SELECT * FROM {groups_members} WHERE groupid = ?) UG LEFT OUTER JOIN 
+// (SELECT userid, PE.user_id as entry_user_id, rubric_1, rubric_2, rubric_3, rubric_4, rubric_5, rubric_6 comment  FROM (SELECT * FROM {groups_members} WHERE groupid = ?) UG LEFT OUTER JOIN 
 // (SELECT * FROM {ispeereval_rubrics} WHERE user_id = ? AND ispeereval_id = ?) PE ON UG.userid = PE.peer_id) PR
-// INNER JOIN {user} ON {user}.id = PR.userid';
-// $group_menbers_records= $DB->get_records_sql($group_menbers_sql, array($groupid, $USER->id, $ispeereval->id));
+// INNER JOIN {user} ON {user}.id = PR.userid WHERE NOT EXISTS (SELECT * FROM {user} WHERE PR.userid = ?)';
+// $group_menbers_records= $DB->get_records_sql($group_menbers_sql, array($groupid, $USER->id, $ispeereval->id, $USER->id));
+
+// --------------------v2.0
+// // コースに登録されている自分以外の学生ロールのユーザーid　par = $context->id, $course->id, $USER->id
+// $user = "SELECT DISTINCT ROLES.userid FROM (${roles}) ROLES INNER JOIN (${enrol}) ENROL ON ROLES.userid = ENROL.userid WHERE NOT EXISTS (SELECT * FROM {user} WHERE ENROL.userid = ?)";
+// // 自分のグループのユーザー(自分を除く，学生ロール)　par = $context->id, $course->id, $USER->id, $groupid
+// $mygroup = "SELECT USER.* FROM (${user}) USER INNER JOIN (SELECT userid FROM {groups_members} WHERE groupid = ?) MYGROUP ON MYGROUP.userid = USER.userid";
+// // 自分のグループのユーザーの情報(自分を除く，学生ロール) par = $context->id, $course->id, $USER->id, $groupid
+// $mygroup_info = "SELECT {user}.id, concat({user}.lastname, ' ', {user}.firstname) name, {user}.username FROM (${mygroup}) MYGROUP INNER JOIN {user} ON MYGROUP.userid = {user}.id";
+// // 自分が登録したルーブリック par = $USER->id, $ispeereval->id
+// $rubrics = "SELECT * FROM {ispeereval_rubrics} WHERE user_id = ? AND ispeereval_id = ?";
+// // par = $context->id, $course->id, $USER->id, $groupid, $USER->id, $ispeereval->id
+// $group_menbers_sql = "SELECT * FROM (${mygroup_info}) MYGROUP LEFT OUTER JOIN (${rubrics}) RUBRICS ON MYGROUP.id = RUBRICS.peer_id OR RUBRICS.peer_id is NULL";
+// $group_menbers_records = $DB->get_records_sql($group_menbers_sql, array($context->id, $course->id, $USER->id, $groupid, $USER->id, $ispeereval->id));
+
+
+// --------------------v3.0
+$roles = 'SELECT userid FROM {role_assignments} WHERE contextid = ? AND roleid = (SELECT id FROM {role} WHERE shortname = "student")';
+$enrol = 'SELECT userid FROM {user_enrolments} WHERE enrolid = (SELECT id FROM {enrol} WHERE enrol = "manual" AND courseid = ?)';
+// コースに登録されている学生ロールのユーザーid
+// $context->id, $course->id
+$users = "SELECT DISTINCT ROLES.userid FROM (${roles}) ROLES INNER JOIN (${enrol}) ENROL ON ROLES.userid = ENROL.userid";
+// 自分のグループのユーザー(自分を除く，学生ロール) 
+// $context->id, $course->id, $groupid, $USER->id
+$mygroup = "SELECT USERS.* FROM (${users}) USERS INNER JOIN (SELECT userid FROM {groups_members} WHERE groupid = ?) MYGROUP ON MYGROUP.userid = USERS.userid AND USERS.userid != ?";
+// 自分のグループのユーザー情報(自分を除く，学生ロール) 
+// $context->id, $course->id, $groupid, $USER->id
+$mygroup_info = "SELECT {user}.id as userid, concat({user}.lastname, ' ', {user}.firstname) name FROM (${mygroup}) MYGROUP INNER JOIN {user} ON MYGROUP.userid = {user}.id";
+// 自分が登録した評価一覧
+// $USER->id, $ispeereval->id
+$rubrics = "SELECT * FROM {ispeereval_rubrics} WHERE user_id = ? AND ispeereval_id = ?";
+// グループメンバーの評価一覧
+// $context->id, $course->id, $groupid, $USER->id, $USER->id, $ispeereval->id
+$gropu_rubrics = "SELECT * FROM (${mygroup_info}) MYGROUPINFO LEFT OUTER JOIN (${rubrics}) RUBRICS ON MYGROUPINFO.userid = RUBRICS.peer_id";
+$group_menbers_records = $DB->get_records_sql($gropu_rubrics, array($context->id, $course->id, $groupid, $USER->id, $USER->id, $ispeereval->id));
+
 
 // グループがない場合コース内のユーザー情報を取得
 if (!isset($groupid)) {
@@ -28,11 +56,7 @@ if (!isset($groupid)) {
 }
 
 // 自分が登録した評価
-// $you_entry_records = $DB->get_records('ispeereval_rubrics', $composite_key);
-$you_entry_records_sql = 'SELECT A.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username
-                            from (SELECT * from {ispeereval_rubrics} WHERE ispeereval_id = ? AND user_id = ?) A
-                            inner join {user} on A.peer_id = {user}.id';
-$you_entry_records = $DB->get_records_sql($you_entry_records_sql, array($ispeereval->id, $USER->id));
+$you_entry_records = $group_menbers_records;
 ?>
 
 <link rel="stylesheet" type="text/css" href="./style.css">
@@ -51,7 +75,7 @@ $you_entry_records = $DB->get_records_sql($you_entry_records_sql, array($ispeere
             <td>
                 <?php echo $group_menbers_record->name ?>
             </td>
-            <?php if (isset($group_menbers_record->entry_user_id)) :?>
+            <?php if (isset($group_menbers_record->timecreated)) :?>
             <td><a href="#entry_records">登録した評価を確認する</a></td>
             <?php else:?>
             <td>未登録</td>

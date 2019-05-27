@@ -3,13 +3,13 @@
 <h1 id="entry_records">登録した評価</h1>
 <ul class="nav nav-tabs">
 <?php foreach ($you_entry_records as $record) :?>
-<li><a data-toggle="tab" href="#<?php echo $record->username ?>"><?php echo $record->name; ?></a></li>
+<li><a data-toggle="tab" href="#<?php echo $record->name ?>"><?php echo $record->name; ?></a></li>
 <?php endforeach; ?>
 </ul>
 
 <div class="tab-content">
 <?php foreach ($you_entry_records as $record) :?>
-<div id="<?php echo $record->username ?>" class="tab-pane fade">
+<div id="<?php echo $record->name ?>" class="tab-pane fade">
 
     <table class="table table-bordered">
         <tbody>
