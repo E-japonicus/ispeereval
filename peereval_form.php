@@ -62,6 +62,14 @@ $you_entry_records = $group_menbers_records;
 <link rel="stylesheet" type="text/css" href="./style.css">
 <script type="text/javascript" src="./javascript/jquery-3.3.1.min.js"></script>
 
+<div>
+<h2>注意事項</h2>
+    <ul>
+    <li><b>評価を登録する時は評価相手の作成した問題を見ながら評価をしてください。</b></li>
+    <li><b>評価結果は評価相手に表示されません。</b></li>
+    </ul>
+</div>
+
 <?php if (isset($groupid)) :?>
 <h1>グループメンバーの評価を登録してください</h1>
 <table class="table table-bordered">
