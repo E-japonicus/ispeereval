@@ -207,6 +207,21 @@ function xmldb_ispeereval_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2019051003, 'ispeereval');
     }
 
+    if ($oldversion < 2019070301) {
+
+        // Define field target to be added to ispeereval.
+        $table = new xmldb_table('ispeereval');
+        $field = new xmldb_field('target', XMLDB_TYPE_TEXT, null, null, null, null, null, 'times');
+
+        // Conditionally launch add field target.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ispeereval savepoint reached.
+        upgrade_mod_savepoint(true, 2019070301, 'ispeereval');
+    }
+
 
 
     return true;

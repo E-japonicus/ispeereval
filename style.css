@@ -18,3 +18,12 @@
     font-weight: bold;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
 }
+
+.sticky {
+    position: -webkit-sticky; /* Safari用 */
+    position:sticky; /* 要素をスクロールに応じて固定 */
+    top:0; /* 縦スクロールに追従 */
+	z-index: 100; /* z-indexで最前面に持ってくる */
+	top: 5%;
+	background-color: white;
+}
