@@ -20,7 +20,7 @@
         <?php if(isset($record->timecreated)) : ?>
         <div id="peer_<?php echo $record->userid ?>" class="tab-pane <?php echo $active ?>">
             <table class="table table-bordered">
-                <thead style="background: #f8f8f8;">
+                <thead class="thead">
                     <tr>
                         <th style="text-align:center" rowspan="2" width="15%">規準</th>
                         <th style="text-align:center" colspan="4">基準</th>

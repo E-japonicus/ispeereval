@@ -90,7 +90,7 @@ $you_entry_records = $group_menbers_records;
 <?php if (isset($groupid)) :?>
 <h1>グループメンバーの評価を登録してください</h1>
 <table class="table table-bordered">
-    <thead style="background: #f8f8f8;">
+    <thead class="thead">
         <tr>
 			<th>グループメンバー</th>
 			<th>登録した評価の確認</th>
