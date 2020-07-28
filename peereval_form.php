@@ -142,7 +142,7 @@ $you_entry_records = $group_menbers_records;
                 <th style="text-align:center" width="20%">レベル２</th>
                 <th style="text-align:center" width="20%">レベル３</th>
             </tr>
-            <?php for ($i=1; $i <= 6 ; $i++): ?>
+            <?php for ($i=1; $i <= 3 ; $i++): ?>
             <tr height="150">
                 <th>
                     <?php echo get_string("rubric[{$i}]", 'ispeereval')?>

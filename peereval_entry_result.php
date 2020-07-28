@@ -33,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php for ($i=1; $i <= 6; $i++) :?>
+                    <?php for ($i=1; $i <= 3; $i++) :?>
                     <tr height="150">
                         <th>
                             <?php echo get_string("rubric[{$i}]", 'ispeereval')?>

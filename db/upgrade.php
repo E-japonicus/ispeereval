@@ -222,6 +222,26 @@ function xmldb_ispeereval_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2019070301, 'ispeereval');
     }
 
+     if ($oldversion < 2020072801) {
+
+        // Changing nullability of field rubric_1 on table ispeereval_rubrics to not null.
+        $table = new xmldb_table('ispeereval_rubrics');
+        $field_1 = new xmldb_field('rubric_1', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'peer_id');
+        $field_2 = new xmldb_field('rubric_2', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'peer_id');
+        $field_3 = new xmldb_field('rubric_3', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'peer_id');
+        $field_4 = new xmldb_field('rubric_4', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'peer_id');
+        $field_5 = new xmldb_field('rubric_5', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'peer_id');
+        $field_6 = new xmldb_field('rubric_6', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'peer_id');
+
+        // Launch change of default for field rubric_1.
+        for ($i=1; $i <= 6 ; $i++) { 
+            $dbman->change_field_default($table, ${field_.$i});            
+        }
+
+        // Ispeereval savepoint reached.
+        upgrade_mod_savepoint(true, 2020072801, 'ispeereval');
+    }
+
 
 
     return true;
