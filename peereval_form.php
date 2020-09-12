@@ -160,7 +160,7 @@ $you_entry_records = $group_menbers_records;
             <tr>
                 <th style="text-align:center">評価コメント</th>     
                 <td colspan="4">
-                    <textarea name="comment" cols="120" rows="4" required></textarea>
+                    <textarea style="width:90%;" name="comment" cols="120" rows="4" required></textarea>
                 </td>       
             </tr>
         </tbody>

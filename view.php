@@ -81,17 +81,60 @@ if ($ispeereval->intro) {
 $composite_key = array('user_id' => $USER->id, 'ispeereval_id' => $ispeereval->id);
 $context = context_course::instance($course->id);
 $roles   = get_user_roles($context, $USER->id);
-$teacher = array_filter($roles, function ($role) {
-    return preg_match('/teacher/i', $role->shortname);
+$editingteacher = array_filter($roles, function ($role) {
+    return preg_match('/^editingteacher/i', $role->shortname);
 });
+$teacher = array_filter($roles, function ($role) {
+    return preg_match('/^teacher/i', $role->shortname);
+});
+
 // DB登録の読み込み
 include_once './locallib.php';
 
-// require_once("{$CFG->dirroot}/mod/ispeereval/peereval_form.php"); 
-
-if (count($teacher) > 0) :
+if (count($editingteacher) > 0) :
     // if teacher => teacher_view
     require_once("{$CFG->dirroot}/mod/ispeereval/teachers_view.php");    
+
+elseif (count($teacher) > 0) :
+
+    // 評価登録のボタンが押されたら
+    if (isset($_POST['choose_group'])) :
+    // 評価登録ページの表示
+    require_once("{$CFG->dirroot}/mod/ispeereval/tasa_view.php");
+
+    else:
+        // 評価登録ボタンが押されたら
+        if (isset($_POST['tasa_submit'])) :
+            // 各学生ごとにデータを分割
+            foreach ($_POST as $post):
+                if ($post === end($_POST)) :
+                    break;
+                endif;
+
+                // データの処理
+                $records = new stdClass();
+                $records->user_id       = $USER->id;
+                $records->ispeereval_id = $ispeereval->id;
+
+                $records->peer_id   =   $post['userid'];
+                $records->group_id  =   $post['groupid'];
+                $records->rubric_1  =   $post['rubric_1'];
+                $records->rubric_2  =   $post['rubric_2'];
+                $records->comment   =   $post['comment'];
+
+                //　書き込み
+                if (ispeereval_tasa_rubrics_upsert($records)):
+                    // success upsert
+                else:
+                    // failed
+                endif;
+
+            endforeach;
+        
+        endif;
+        // グループ選択ページの表示
+        require_once("{$CFG->dirroot}/mod/ispeereval/tasa_index.php");
+    endif;
 
 else:
     // not teacher

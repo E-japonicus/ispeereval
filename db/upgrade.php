@@ -242,6 +242,69 @@ function xmldb_ispeereval_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2020072801, 'ispeereval');
     }
 
+     if ($oldversion < 2020091102) {
+
+        // Define table ispeereval_tasa_rubrics to be created.
+        $table = new xmldb_table('ispeereval_tasa_rubrics');
+
+        // Adding fields to table ispeereval_tasa_rubrics.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('user_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('ispeereval_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('peer_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('rubric_1', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('rubric_2', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('rubric_3', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('rubric_4', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('rubric_5', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('rubric_6', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('comment', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+
+        // Adding keys to table ispeereval_tasa_rubrics.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('user_id', XMLDB_KEY_FOREIGN, ['user_id'], 'user', ['id']);
+        $table->add_key('ispeereval_id', XMLDB_KEY_FOREIGN, ['ispeereval_id'], 'ispeereval', ['id']);
+        $table->add_key('peer_id', XMLDB_KEY_FOREIGN, ['peer_id'], 'user', ['id']);
+
+        // Conditionally launch create table for ispeereval_tasa_rubrics.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Ispeereval savepoint reached.
+        upgrade_mod_savepoint(true, 2020091102, 'ispeereval');
+    }
+
+    if ($oldversion < 2020091104) {
+
+        // Define field group_id to be added to ispeereval_tasa_rubrics.
+        $table = new xmldb_table('ispeereval_tasa_rubrics');
+        $field = new xmldb_field('group_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, 'peer_id');
+
+        // Conditionally launch add field group_id.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ispeereval savepoint reached.
+        upgrade_mod_savepoint(true, 2020091104, 'ispeereval');
+    }
+
+    if ($oldversion < 2020091102) {
+
+        // Define key group_id (foreign) to be added to ispeereval_tasa_rubrics.
+        $table = new xmldb_table('ispeereval_tasa_rubrics');
+        $key = new xmldb_key('group_id', XMLDB_KEY_FOREIGN, ['group_id'], 'groups', ['id']);
+
+        // Launch add key group_id.
+        $dbman->add_key($table, $key);
+
+        // Ispeereval savepoint reached.
+        upgrade_mod_savepoint(true, 2020091102, 'ispeereval');
+    }
+
 
 
     return true;

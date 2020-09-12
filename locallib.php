@@ -37,10 +37,10 @@ defined('MOODLE_INTERNAL') || die();
  *}
  */
 
-  function ispeereval_rubrics_upsert($input){
-     global $DB, $composite_key, $USER, $ispeereval;
+function ispeereval_rubrics_upsert($input){
+    global $DB, $composite_key, $USER, $ispeereval;
 
-     if($record = $DB->get_record('ispeereval_rubrics', array('user_id' => $USER->id, 'ispeereval_id' => $ispeereval->id, 'peer_id' => $input->peer_id))):   // 既にDBにデータが登録されている時
+    if($record = $DB->get_record('ispeereval_rubrics', array('user_id' => $USER->id, 'ispeereval_id' => $ispeereval->id, 'peer_id' => $input->peer_id))):   // 既にDBにデータが登録されている時
 
         foreach ($input as $key => $value):
             $record->$key = $value;
@@ -54,5 +54,25 @@ defined('MOODLE_INTERNAL') || die();
         $record->timecreated = time();
 
         return $DB->insert_record('ispeereval_rubrics', $record);
+    endif;
+ }
+
+ function ispeereval_tasa_rubrics_upsert($input){
+    global $DB, $composite_key, $USER, $ispeereval;
+
+    if($record = $DB->get_record('ispeereval_tasa_rubrics', array('user_id' => $USER->id, 'ispeereval_id' => $ispeereval->id, 'peer_id' => $input->peer_id))):   // 既にDBにデータが登録されている時
+
+        foreach ($input as $key => $value):
+            $record->$key = $value;
+        endforeach;
+        $record->timemodified = time();
+
+        return $DB->update_record('ispeereval_tasa_rubrics', $record);
+        
+    else:   //新規登録
+        $record = $input;
+        $record->timecreated = time();
+
+        return $DB->insert_record('ispeereval_tasa_rubrics', $record);
     endif;
  }
