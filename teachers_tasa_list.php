@@ -25,20 +25,20 @@ $tasa_rubric_records = $DB->get_records_sql($tasa_sql,  array($ispeereval->id));
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($tasa_rubric_records as $record): ?>
+        <?php foreach ($tasa_rubric_records as $tasa_record): ?>
           <tr>
-            <th><?php echo $record->name      ; ?></th>
-            <th><?php echo $record->username  ; ?></th>
+            <th><?php echo $tasa_record->name      ; ?></th>
+            <th><?php echo $tasa_record->username  ; ?></th>
 
-            <th><?php echo $record->peer_name  ; ?></th>
-            <th><?php echo $record->peer_username  ; ?></th>
+            <th><?php echo $tasa_record->peer_name  ; ?></th>
+            <th><?php echo $tasa_record->peer_username  ; ?></th>
 
             <?php
             for ($i=1; $i <= 2; $i++) {
-              echo "<th>".$record->{"rubric_{$i}"}."</th>";
+              echo "<th>".$tasa_record->{"rubric_{$i}"}."</th>";
             }
             ?>
-            <th><?php echo $record->comment  ; ?></th>
+            <th><?php echo $tasa_record->comment  ; ?></th>
           </tr>
         <?php endforeach; ?>
       </tbody>
