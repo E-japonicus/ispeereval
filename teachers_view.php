@@ -10,7 +10,7 @@
       <a href="#list" class="nav-link" data-toggle="tab">学生他者評価一覧</a>
     </li>
     <li class="nav-item">
-      <a href="#list" class="nav-link" data-toggle="tab">TA/SA評価一覧</a>
+      <a href="#tasa_list" class="nav-link" data-toggle="tab">TA/SA評価一覧</a>
     </li>
   </ul>
 </div>
@@ -23,7 +23,7 @@
   <div id="list" class="tab-pane">
     <?php require_once("{$CFG->dirroot}/mod/ispeereval/teachers_list.php"); ?>
   </div>
-  <div id="list" class="tab-pane">
+  <div id="tasa_list" class="tab-pane">
     <?php require_once("{$CFG->dirroot}/mod/ispeereval/teachers_tasa_list"); ?>
   </div>
 </div>
