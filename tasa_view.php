@@ -105,7 +105,7 @@ var form_change_flg = false;
   		form_change_flg = true;
   	});
     // フォーム送信時はアラートOFF
-    $('form[name=selfeval_consider]').submit(function(){
+    $('form[name=tasa_submit]').submit(function(){
         form_change_flg = false;
     });
 });

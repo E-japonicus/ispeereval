@@ -28,7 +28,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_ispeereval';
-$plugin->version = 2020091206;
+$plugin->version = 2020091207;
 $plugin->release = 'v5.0';
 $plugin->requires = 2014051200;
 $plugin->maturity = MATURITY_ALPHA;
